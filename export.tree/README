@@ -1,0 +1,500 @@
+Note: This dataset is the combination of four related datasets that 
+were originally hosted on OpenfMRI.org: ds000113, ds000113b, 
+ds000113c and ds000113d. The combined dataset is now in BIDS 
+format and is simply referred to as ds000113 on OpenNeuro.org. 
+
+For more information about the project visit: http://studyforrest.org
+
+This dataset contains high-resolution functional magnetic resonance (fMRI) data from 
+20 participants recorded at high field strength (7 Tesla) during prolonged stimulation 
+with an auditory feature film ("Forrest Gump''). In addition, a comprehensive set of 
+auxiliary data (T1w, T2w, DTI, susceptibility-weighted image, angiography) as well as 
+measurements to assess technical and physiological noise components have been acquired. 
+An initial analysis confirms that these data can be used to study common and idiosyncratic 
+brain response pattern to complex auditory stimulation. Among the potential uses of this 
+dataset is the study of auditory attention and cognition, language and music perception as 
+well as social perception.  The auxiliary measurements enable a large variety of additional 
+analysis strategies that relate functional response patterns to structural properties of 
+the brain. Alongside the acquired data, we provide source code and detailed information on 
+all employed procedures — from stimulus creation to data analysis. 
+(https://www.nature.com/articles/sdata20143)
+
+The dataset also contains data from the same twenty participants while being repeatedly 
+stimulated with a total of 25 music clips, with and without speech content, from five 
+different genres using a slow event-related paradigm. It also includes raw fMRI 
+data, as well as pre-computed structural alignments for within-subject and group analysis. 
+
+Additionally, seven of the twenty subjects participated in another study: empirical ultra 
+high-field fMRI data recorded at four spatial resolutions (0.8 mm, 1.4 mm, 2 mm, and 3 mm 
+isotropic voxel size) for orientation decoding in visual cortex — in order to test 
+hypotheses on the strength and spatial scale of orientation discriminating signals. 
+(https://www.sciencedirect.com/science/article/pii/S2352340917302056)
+
+Finally, there are additional acquisitions for fifteen of the the twenty participants: 
+retinotopic mapping, a localizer paradigm for higher visual areas (FFA, EBA, PPA), and 
+another 2 hour movie recording with 3T full-brain BOLD fMRI with simultaneous 1000 Hz 
+eyetracking.
+
+For more information about the project visit: http://studyforrest.org
+
+
+
+Dataset content overview
+==================================
+
+
+Stimulus material and protocol descriptions
+---------------------------------------------------------------------
+
+./sourcedata/acquisition_protocols/04-sT1W_3D_TFE_TR2300_TI900_0_7iso_FS.txt
+./sourcedata/acquisition_protocols/05-sT2W_3D_TSE_32chSHC_0_7iso.txt
+./sourcedata/acquisition_protocols/06-VEN_BOLD_HR_32chSHC.txt
+./sourcedata/acquisition_protocols/07-DTI_high_2iso.txt
+./sourcedata/acquisition_protocols/08-field_map.txt
+  Philips-specific MRI acquisition parameters dumps (plain text) for
+  structural MRI (T1w, T2w, SWI, DTI, fieldmap -- in this order)
+
+./sourcedata/acquisition_protocols/task01_fmri_session1.pdf
+./sourcedata/acquisition_protocols/task01_fmri_session2.pdf
+./sourcedata/acquisition_protocols/angio_session.pdf
+  Siemens-specific MRI acquisition parameters dumps (PDF format) for
+  functional MRI and angiography.
+
+./stimuli/annotations/german_audio_description.csv
+
+  Audio-description transcript
+
+  This transcript contains all information on the audio-movie content that
+  cannot be inferred from the DVD release — in a plain text,
+  comma-separated-value table. Start and end time stamp, as well as the spoken
+  text are provided for each continuous audio description segment.
+
+./stimuli/annotations/scenes.csv
+
+  Movie scenes
+
+  A plain text, comma-separated-value table with start and end time for all 198
+  scenes in the presented movie cut. In addition, each table row contains whether
+  a scene takes place indoors or outdoors.
+
+./stimuli/generate/generate_melt_cmds.py
+  Python script to generate commands for stimuli generation
+
+./stimuli/psychopy/buttons.csv
+./stimuli/psychopy/forrest_gump.psyexp
+./stimuli/psychopy/segment_cfg.csv
+  Source code of the stimuli presentation in PsychoPy
+
+
+Functional imaging - Forrest Gump Task
+--------------------------------------
+
+Prolonged quasi-natural auditory stimulation (Forrest Gump audio movie)
+
+Eight approximately 15 min long recording runs, together comprising the entire
+duration of a two-hour presentation of an audio-only version of the Hollywood
+feature film "Forrest Gump" made for a visually impaired audience (German
+dubbing).
+
+For each run, there are 4D volumetric images (160x160x36)in NIfTI format , one
+volume recorded every 2 s, obtain from a Siemens MR scanner at 7 Tesla using a
+T2*-weighted gradient-echo EPI sequence (1.4 mm isotropic voxel size). These
+images have partial brain coverage — centered on the auditory cortices in both
+brain hemispheres and include frontal and posterior portions of the brain.
+There is no coverage for the upper portion of the brain (e.g. large parts of
+motor and somato-sensory cortices).
+
+Several flavors of raw and preprocessed data are available:
+
+Raw BOLD functional MRI
+~~~~~~~~~~~~~~~~~~~~~~~
+
+These raw data suffer from severe geometric distortions.
+
+Filename examples for subject 01 and run 01
+
+./sub-01/ses-forrestgump/func/sub-01_ses-forrestgump_task-forrestgump_acq-raw_run-01_bold.nii.gz
+   BOLD data
+
+./sourcedata/dicominfo/sub-01/ses-forrestgump/func/sub-01_ses-forrestgump_task-forrestgump_acq-raw_run-01_bold_dicominfo.txt
+   Image property dump from DICOM conversion
+
+Raw BOLD functional MRI (with applied distortion correction)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Identical to raw BOLD data, but with a scanner-side correction for geometric
+distortions applied (also include correction for participant motion). These
+data are most suitable for analysis of individual brains.
+
+Filename examples for subject 01 and run 01
+
+./sub-01/ses-forrestgump/func/sub-01_ses-forrestgump_task-forrestgump_acq-dico_run-01_bold.nii.gz
+  BOLD data
+
+./derivatives/motion/sub-01/ses-forrestgump/func/sub-01_ses-forrestgump_task-forrestgump_acq-dico_run-01_moco_ref.nii.gz
+  Reference volume used for motion correction. Only runs 1 and 5
+  (first runs in each session)
+
+./sourcedata/dicominfo/sub-01/ses-forrestgump/func/sub-01_ses-forrestgump_task-forrestgump_acq-dico_run-01_bold_dicominfo.txt
+   Image property dump from DICOM conversion
+
+
+Raw BOLD functional MRI (linear anatomical alignment)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+These images are motion and distortion corrected and have been anatomically
+aligned to a BOLD group template image that was generated from the entire group
+of participants.
+
+Alignment procedure was linear (image projection using an affine
+transformation).  These data are most suitable for group-analyses and
+inter-individual comparisons.
+
+Filename examples for subject 01 and run 01
+
+./derivatives/linear_anatomical_alignment/sub-01/ses-forrestgump/func/sub-01_ses-forrestgump_task-forrestgump_rec-dico7Tad2grpbold7Tad_run-01_bold.nii.gz
+  BOLD data
+
+./derivatives/linear_anatomical_alignment/sub-01/ses-forrestgump/func/sub-01_ses-forrestgump_task-forrestgump_rec-dico7Tad2grpbold7TadBrainMask_run-01_bold.nii.gz
+  Matching brain mask volume
+
+./derivatives/linear_anatomical_alignment/sub-01/ses-forrestgump/func/sub-01_ses-forrestgump_task-forrestgump_rec-XFMdico7Tad2grpbold7Tad_run-01_bold.mat
+  4x4 affine transformation matrix (plain text format)
+
+
+Raw BOLD functional MRI (non-linear anatomical alignment)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+These images are motion and distortion corrected and have been anatomically
+aligned to a BOLD group template image that was generated from the entire group
+of participants.
+
+Alignment procedure was non-linear (image projection using an affine
+transformation with additional transformation by non-linear warpfields).
+These data are most suitable for group-analyses and inter-individual
+comparisons.
+
+Filename examples for subject 01 and run 01
+
+./derivatives/non-linear_anatomical_alignment/sub-01/ses-forrestgump/func/sub-01_ses-forrestgump_task-forrestgump_rec-dico7Tad2grpbold7TadNL_run-01_bold.nii.gz
+  BOLD data
+
+./derivatives/non-linear_anatomical_alignment/sub-01/ses-forrestgump/func/sub-01_ses-forrestgump_task-forrestgump_rec-dico7Tad2grpbold7TadBrainMaskNLBrainMask_run-01_bold.nii.gz
+  Matching brain mask volume
+
+./derivatives/non-linear_anatomical_alignment/sub-01/ses-forrestgump/func/sub-01_ses-forrestgump_task-forrestgump_rec-dico7Tad2grpbold7TadNLWarp_run-01_bold.nii.gz
+  Warpfield (associated affine transformation is identical with "linear"
+  alignment
+
+
+Functional imaging - Auditory Perception Session
+---------------------------------------------
+Participants were repeatedly stimulated with a total of 25 music clips, with and 
+without speech content, from five different genres using a slow event-related 
+paradigm.
+
+Filename examples for subject 01 and run 01
+
+./sub-01/ses-auditoryperception/func/sub-01_ses-auditoryperception_task-auditoryperception_run-01_bold.nii.gz
+./sub-01/ses-auditoryperception/func/sub-01_ses-auditoryperception_task-auditoryperception_run-01_events.tsv
+
+Functional imaging - Localizer Session
+---------------------------------------------
+Filename examples for subject 01 and run 01
+
+./sub-01/ses-localizer/func/sub-01_ses-localizer_task-movielocalizer_run-1_bold.nii.gz
+./sub-01/ses-localizer/func/sub-01_ses-localizer_task-movielocalizer_run-1_defacemask.nii.gz
+./sub-01/ses-localizer/func/sub-01_ses-localizer_task-objectcategories_run-1_bold.nii.gz
+./sub-01/ses-localizer/func/sub-01_ses-localizer_task-objectcategories_run-1_defacemask.nii.gz
+./sub-01/ses-localizer/func/sub-01_ses-localizer_task-retmapccw_run-1_bold.nii.gz
+./sub-01/ses-localizer/func/sub-01_ses-localizer_task-retmapccw_run-1_defacemask.nii.gz
+./sub-01/ses-localizer/func/sub-01_ses-localizer_task-retmapclw_run-1_bold.nii.gz
+./sub-01/ses-localizer/func/sub-01_ses-localizer_task-retmapclw_run-1_defacemask.nii.gz
+./sub-01/ses-localizer/func/sub-01_ses-localizer_task-retmapcon_run-1_bold.nii.gz
+./sub-01/ses-localizer/func/sub-01_ses-localizer_task-retmapcon_run-1_defacemask.nii.gz
+./sub-01/ses-localizer/func/sub-01_ses-localizer_task-retmapexp_run-1_bold.nii.gz
+./sub-01/ses-localizer/func/sub-01_ses-localizer_task-retmapexp_run-1_defacemask.nii.gz
+
+Functional imaging - Movie Session
+---------------------------------------------
+Filename examples for subject 01 and run 01
+
+./sub-01/ses-movie/func/sub-01_ses-movie_task-movie_run-1_bold.nii.gz
+./sub-01_ses-movie_task-movie_run-1_defacemask.nii.gz
+./sub-01_ses-movie_task-movie_run-1_events.tsv
+
+
+Functional imaging - Coverage and Orientation Tasks
+---------------------------------------------
+Filename examples for subject 06, ses-r08 and run 01
+
+./sub-06/ses-r08/func/sub-06_ses-r08_task-coverage_bold.nii.gz
+./sub-06/ses-r08/func/sub-06_ses-r08_task-coverage_rec-dico_bold.nii.gz
+./sub-06/ses-r08/func/sub-06_ses-r08_task-orientation_rec-dico_run-01_bold.nii.gz
+./sub-06/ses-r08/func/sub-06_ses-r08_task-orientation_run-01_bold.nii.gz
+./sub-06/ses-r08/func/sub-06_ses-r08_task-orientation_run-01_events.tsv
+
+Structural MRI data (T1w, T2w, SWI)
+-----------------------------------
+
+T1-weighted images (gray-white contrast)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Full-brain volumetric images (384x384x274) in NIfTI format recorded with a
+Philips MR scanner at 3 Tesla using a 3D TFE sequence (0.67 mm isotropic voxel
+size). Facial features have been removed from these images for
+de-identification.
+
+./sub-01/ses-forrestgump/anat/sub-01_ses-forrestgump_T1w.nii.gz
+  Data
+
+./sourcedata/dicominfo/sub-01/ses-forrestgump/anat/sub-01_ses-forrestgump_T1w_dicominfo.txt
+  Image property dump from DICOM conversion
+
+./sub-01/ses-forrestgump/anat/sub-01_ses-forrestgump_mod-T1w_defacemask.nii.gz
+  Binary mask indicating voxels modified during de-facing
+
+T2-weighted images (fluid-tissue contrast)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Full-brain volumetric images (384x384x274) in NIfTI format recorded with a
+Philips MR scanner at 3 Tesla using a 3D TSE sequence (0.67 mm isotropic voxel
+size). Facial features have been removed from these images for
+de-identification.
+
+./sub-01/ses-forrestgump/anat/sub-01_ses-forrestgump_T2w.nii.gz
+  Data
+
+./sub-01/ses-forrestgump/anat/sub-01_ses-forrestgump_mod-T2w_defacemask.nii.gz
+  Binary mask indicating voxels modified during de-facing
+
+./sourcedata/dicominfo/sub-01/ses-forrestgump/anat/sub-01_ses-forrestgump_T2w_dicominfo.txt
+  Image property dump from DICOM conversion
+
+Susceptibility-weighted images (venography)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Full-brain volumetric images (512x512x500) in NIfTI format recorded with a
+Philips MR scanner at 3 Tesla using a 3D Presto FFE sequence (0.43x0.43x0.35 mm
+voxel size). Facial features have been removed from these images for
+de-identification. Separate phase and magnitude images are provided.
+
+./sub-01/ses-forrestgump/anat/sub-01_ses-forrestgump_acq-mag_veno.nii.gz
+  Magnitude image
+
+./sub-01/ses-forrestgump/anat/sub-01_ses-forrestgump_acq-mag_mod-veno_defacemask.nii.gz
+  Binary mask indicating voxels modified during de-facing
+
+./sourcedata/dicominfo/sub-01/ses-forrestgump/anat/sub-01_ses-forrestgump_acq-mag_veno_dicominfo.txt
+  Image property dump from DICOM conversion
+
+./sub-01/ses-forrestgump/anat/sub-01_ses-forrestgump_acq-pha_mod-veno_defacemask.nii.gz
+./sourcedata/dicominfo/sub-01/ses-forrestgump/anat/sub-01_ses-forrestgump_acq-pha_veno_dicominfo.txt
+./sub-01/ses-forrestgump/anat/sub-01_ses-forrestgump_acq-pha_veno.nii.gz
+  Corresponding files for the phase image
+
+
+
+Diffusion tensor imaging data
+-----------------------------
+
+Full-brain volumetric images (144x144x70) in NIfTI format recorded with a
+Philips MR scanner at 3 Tesla using a diffusion-weighted single-shot spin-echo
+EPI sequence (2 mm isotropic voxel size). Facial features have been removed
+from these images for de-identification. Records of B-values and B-vector
+orientations are provided, as well as a fieldmap (3 mm isotropic voxel size)
+for distortion correction
+
+./sub-01/ses-forrestgump/dwi/sub-01_ses-forrestgump_dwi.nii.gz
+  DTI data
+
+./sub-01/ses-forrestgump/dwi/sub-01_ses-forrestgump_dwi.bval
+./sub-01/ses-forrestgump/dwi/sub-01_ses-forrestgump_dwi.bvec
+  B-values and orientations (plain text)
+
+./sub-01/ses-forrestgump/dwi/sub-01_ses-forrestgump_mod-dwi_defacemask.nii.gz
+  Binary mask indicating voxels modified during de-facing
+
+./sub-01/ses-forrestgump/fmap/sub-01_ses-forrestgump_mod-magnitude1_defacemask.nii.gz
+./sourcedata/dicominfo/sub-01/ses-forrestgump/fmap/sub-01_ses-forrestgump_magnitude1_dicominfo.txt
+./sub-01/ses-forrestgump/fmap/sub-01_ses-forrestgump_magnitude1.nii.gz
+./sub-01/ses-forrestgump/fmap/sub-01_ses-forrestgump_mod-phasediff_defacemask.nii.gz
+./sourcedata/dicominfo/sub-01/ses-forrestgump/fmap/sub-01_ses-forrestgump_phasediff_dicominfo.txt
+./sub-01/ses-forrestgump/fmap/sub-01_ses-forrestgump_phasediff.nii.gz
+  Fieldmap files (analog filename to SWI images)
+
+
+Physiological recordings and fMRI motion estimates
+--------------------------------------------------
+
+Participant motion estimates
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+These data have been estimated from the raw BOLD images prior to distortion
+correction. Files are provided in a six-column plain text format for each fMRI
+scanning run separately.
+
+Example filenames for subject 01:
+
+./derivatives/motion/sub-01/ses-forrestgump/func/sub-01_ses-forrestgump_acq-dico_run-01_bold_moco.txt
+./derivatives/motion/sub-01/ses-forrestgump/func/sub-01_ses-forrestgump_acq-dico_run-02_bold_moco.txt
+./derivatives/motion/sub-01/ses-forrestgump/func/sub-01_ses-forrestgump_acq-dico_run-03_bold_moco.txt
+./derivatives/motion/sub-01/ses-forrestgump/func/sub-01_ses-forrestgump_acq-dico_run-04_bold_moco.txt
+./derivatives/motion/sub-01/ses-forrestgump/func/sub-01_ses-forrestgump_acq-dico_run-05_bold_moco.txt
+./derivatives/motion/sub-01/ses-forrestgump/func/sub-01_ses-forrestgump_acq-dico_run-06_bold_moco.txt
+./derivatives/motion/sub-01/ses-forrestgump/func/sub-01_ses-forrestgump_acq-dico_run-07_bold_moco.txt
+./derivatives/motion/sub-01/ses-forrestgump/func/sub-01_ses-forrestgump_acq-dico_run-08_bold_moco.txt
+
+Cardiac and respiratory trace (physiological confounds)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+These data have been obtain simultaneously to the fMRI recording. 
+Files are in plain text format (compressed) for each
+scanning run separately and includes the MR scanner's volume acquisition
+trigger signal for precise temporal alignment. These data are useful for
+de-noising of fMRI time series.
+
+Example filenames for subject 06 and run 01:
+
+./sub-06/ses-forrestgump/func/sub-06_ses-forrestgump_task-forrestgump_run-01_physio.tsv.gz
+./sub-06/ses-auditoryperception/func/sub-06_ses-auditoryperception_task-auditoryperception_run-01_physio.tsv.gz
+./sub-06/ses-localizer/func/sub-06_ses-localizer_task-movielocalizer_run-1_recording-cardresp_physio.tsv.gz
+./sub-06/ses-localizer/func/sub-06_ses-localizer_task-objectcategories_run-1_recording-cardresp_physio.tsv.gz
+./sub-06/ses-localizer/func/sub-06_ses-localizer_task-retmapccw_run-1_recording-cardresp_physio.tsv.gz
+./sub-06/ses-localizer/func/sub-06_ses-localizer_task-retmapclw_run-1_recording-cardresp_physio.tsv.gz
+./sub-06/ses-localizer/func/sub-06_ses-localizer_task-retmapcon_run-1_recording-cardresp_physio.tsv.gz
+./sub-06/ses-localizer/func/sub-06_ses-localizer_task-retmapexp_run-1_recording-cardresp_physio.tsv.gz
+./sub-06/ses-movie/func/sub-06_ses-movie_task-movie_run-1_recording-cardresp_physio.tsv.gz
+./sub-06/ses-movie/func/sub-06_ses-movie_task-movie_run-1_recording-eyegaze_physio.tsv.gz
+./sub-06/ses-r08/func/sub-06_ses-r08_task-coverage_rec-dico_recording-motion_physio.tsv.gz
+./sub-06/ses-r08/func/sub-06_ses-r08_task-orientation_rec-dico_run-01_recording-motion_physio.tsv.gz
+./sub-06/ses-r08/func/sub-06_ses-r08_task-coverage_rec-dico_recording-motion_physio.tsv.gz
+
+./derivatives/physio_logs/sub-06/ses-forrestgump/func/sub-06_ses-forrestgump_task-forrestgump_run-01_physio_conversion.log
+  Conversion log with information on potential anomalies
+
+Time-of-flight inflow angiography (arteriography)
+-------------------------------------------------
+
+Volumetric images (640x480x150) in NIfTI format recorded with a Siemens MR
+scanner at 7 Tesla using a 3D multi-slab sequence (0.3 mm isotropic voxel
+size). These images have partial brain coverage — approximately the same volume
+as the functional MRI scans.
+
+./sourcedata/dicominfo/sub-01/ses-forrestgump/anat/sub-01_ses-forrestgump_angio_dicominfo.txt
+./sub-01/ses-forrestgump/anat/sub-01_ses-forrestgump_angio.nii.gz
+
+
+Phantom raw BOLD fMRI
+---------------------
+
+Identical imaging set up as the auditory stimulation fMRI, but scanning a gel
+phantom instead of a human participant. This data is a measurement of the
+technical noise in the fMRI acquisition pipeline.
+
+These data are also contained in the respective BOLD data tarballs.
+
+Example filenames for run01:
+
+./sub-phantom/ses-forrestgump/func/sub-phantom_ses-forrestgump_task-forrestgump_acq-raw_run-01_bold.nii.gz
+  Raw BOLD data
+
+./sourcedata/dicominfo/sub-phantom/ses-forrestgump/func/sub-phantom_ses-forrestgump_task-forrestgump_acq-raw_run-01_bold_dicominfo.txt
+  Image property dump from DICOM conversion
+
+./sub-phantom/ses-forrestgump/func/sub-phantom_ses-forrestgump_task-forrestgump_acq-dico_run-01_bold.nii.gz
+  Motion and distortion-corrected data
+
+./sourcedata/dicominfo/sub-phantom/ses-forrestgump/func/sub-phantom_ses-forrestgump_task-forrestgump_acq-dico_run-01_bold_dicominfo.txt
+  Image property dump from DICOM conversion
+
+./derivatives/motion/sub-phantom/ses-forrestgump/func/sub-phantom_ses-forrestgump_task-forrestgump_acq-dico_run-01_bold_moco.txt
+  Motion correction estimates
+
+./derivatives/motion/sub-phantom/ses-forrestgump/func/sub-phantom_ses-forrestgump_task-forrestgump_acq-dico_run-01_moco_ref.nii.gz
+  Motion correction reference volume (only run 1 and 5)
+
+
+Group template volumes
+----------------------
+
+Group-template images for anatomical alignment of individual brains into
+group space. Individual template images are provided for BOLD, T1w, and T2w
+images.
+
+T1w template:
+
+./derivatives/templates/t1w/head.nii.gz
+  Template image
+
+./derivatives/templates/t1w/brain.nii.gz
+  Brain extracted template image
+
+./derivatives/templates/t1w/in_mni/brain_12dof.nii.gz
+  Brain extracted template image projected into MNI space
+
+./derivatives/templates/t1w/xfm/mni2tmpl_12dof.mat
+./derivatives/templates/t1w/xfm/tmpl2mni_12dof.mat
+  Affine transformation matrices from template into MNI space
+  (and back)
+
+./derivatives/templates/t1w/from_mni/MNI152_T1_1mm_brain_mask_dil.nii.gz
+./derivatives/templates/t1w/from_mni/MNI152_T1_1mm_brain_mask.nii.gz
+./derivatives/templates/t1w/from_mni/MNI152_T1_1mm.nii.gz
+./derivatives/templates/t1w/from_mni/avg152T1_brain.nii.gz
+./derivatives/templates/t1w/from_mni/avg152T1_csf.nii.gz
+./derivatives/templates/t1w/from_mni/avg152T1_gray.nii.gz
+./derivatives/templates/t1w/from_mni/avg152T1_white.nii.gz
+  MNI152 template images (masks and prior maps) projected into the template
+  space
+
+
+T2w template:
+
+./derivatives/templates/t2w/brain.nii.gz
+./derivatives/templates/t2w/from_mni/avg152T1_brain.nii.gz
+./derivatives/templates/t2w/from_mni/avg152T1_csf.nii.gz
+./derivatives/templates/t2w/from_mni/avg152T1_gray.nii.gz
+./derivatives/templates/t2w/from_mni/avg152T1_white.nii.gz
+./derivatives/templates/t2w/from_mni/MNI152_T1_1mm_brain_mask_dil.nii.gz
+./derivatives/templates/t2w/from_mni/MNI152_T1_1mm_brain_mask.nii.gz
+./derivatives/templates/t2w/from_mni/MNI152_T1_1mm.nii.gz
+./derivatives/templates/t2w/head.nii.gz
+./derivatives/templates/t2w/in_mni/brain_12dof.nii.gz
+./derivatives/templates/t2w/xfm/mni2tmpl_12dof.mat
+./derivatives/templates/t2w/xfm/tmpl2mni_12dof.mat
+  Files analog to T1w template
+
+
+BOLD template:
+
+./derivatives/templates/grpbold7Tad/brain.nii.gz
+./derivatives/templates/grpbold7Tad/from_mni/avg152T1_brain.nii.gz
+./derivatives/templates/grpbold7Tad/from_mni/avg152T1_csf.nii.gz
+./derivatives/templates/grpbold7Tad/from_mni/avg152T1_gray.nii.gz
+./derivatives/templates/grpbold7Tad/from_mni/avg152T1_white.nii.gz
+./derivatives/templates/grpbold7Tad/from_mni/MNI152_T1_1mm_brain_mask_dil.nii.gz
+./derivatives/templates/grpbold7Tad/from_mni/MNI152_T1_1mm_brain_mask.nii.gz
+./derivatives/templates/grpbold7Tad/from_mni/MNI152_T1_1mm.nii.gz
+./derivatives/templates/grpbold7Tad/head.nii.gz
+./derivatives/templates/grpbold7Tad/in_mni/brain_12dof.nii.gz
+./derivatives/templates/grpbold7Tad/xfm/mni2tmpl_12dof.mat
+./derivatives/templates/grpbold7Tad/xfm/tmpl2mni_12dof.mat
+  Files analog to T1w template
+
+./derivatives/templates/grpbold7Tad/qa/dico7Tad2grpbold7Tad/aligned_brain_samples.nii.gz
+  4D volume with all aligned reference images across runs and participants.
+  For QA.
+
+./derivatives/templates/grpbold7Tad/qa/dico7Tad2grpbold7Tad/brain_mask_stats.nii.gz
+  Brain mask overlap stats for linear alignment of all individual fMRI runs
+  across participants to the BOLD template.
+
+./derivatives/templates/grpbold7Tad/qa/dico7Tad2grpbold7Tad/brain_mask_intersection.nii.gz
+  Brain mask intersection across all runs and participants
+
+./derivatives/templates/grpbold7Tad/qa/dico7Tad2grpbold7Tad_nl/aligned_brain_samples.nii.gz
+./derivatives/templates/grpbold7Tad/qa/dico7Tad2grpbold7Tad_nl/brain_mask_intersection.nii.gz
+./derivatives/templates/grpbold7Tad/qa/dico7Tad2grpbold7Tad_nl/brain_mask_stats.nii.gz
+  Analog files for non-linear alignment
+
