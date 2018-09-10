@@ -1,8 +1,0 @@
-{
-	"RepetitionTime": 9.545,
-	"EchoTime": 0.080,
-	"PulseSequenceType": "spin-echo EPI",
-	"Manufacturer": "Philips",
-	"ManufacturersModelName": "Achieva",
-	"MagneticFieldStrength": 3
-}
