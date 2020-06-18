@@ -1,0 +1,9 @@
+{
+	"RepetitionTime": 0.024,
+	"EchoTime": 0.00384,
+	"FlipAngle": 8,
+	"PulseSequenceType": "3D turbo field echo (TFE)",
+	"Manufacturer": "Philips",
+	"ManufacturersModelName": "Achieva",
+	"MagneticFieldStrength": 7
+}

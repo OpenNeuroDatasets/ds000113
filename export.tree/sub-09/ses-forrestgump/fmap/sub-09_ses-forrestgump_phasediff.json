@@ -1,0 +1,8 @@
+{
+        "Manufacturer": "Philips",
+        "ManufacturersModelName": "Achieva",
+        "MagneticFieldStrength": 3,
+	"EchoTime1": 0.00492,
+	"EchoTime2": 0.00738,
+	"IntendedFor": "ses-forrestgump/dwi/sub-09_ses-forrestgump_dwi.nii.gz"
+}
