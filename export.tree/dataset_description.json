@@ -1,0 +1,26 @@
+{
+    "Name": "Forrest Gump",
+    "License": "",
+    "Authors": [
+        "Michael Hanke",
+        "Florian J. Baumgartner",
+        "Pierre Ibe",
+        "Falko R. Kaule",
+        "Stefan Pollmann",
+        "Oliver Speck",
+        "Wolf Zinke",
+        "Jorg Stadler"
+    ],
+    "Acknowledgements": "",
+    "HowToAcknowledge": "",
+    "Funding": "",
+    "ReferencesAndLinks": [
+        "https://www.nature.com/articles/sdata20143",
+        "https://www.biorxiv.org/content/early/2016/03/31/046581",
+        "https://www.biorxiv.org/content/early/2016/03/31/046573",
+        "https://www.sciencedirect.com/science/article/pii/S2352340917302056",
+        "https://f1000research.com/articles/4-174/v1"
+    ],
+    "DatasetDOI": "10.18112/openneuro.ds000113.v1.3.0",
+    "BIDSVersion": "1.1.0"
+}
