@@ -1,9 +1,0 @@
-{
-    "RepetitionTime": 2.0,
-    "TaskName": "auditory perception",
-    "TaskDescription": "subjects were repeatedly stimulated with a total of 25 music clips, with and without speech content, from five different genres using a slow event-related paradigm",
-    "EchoTime": 0.022,
-    "Manufacturer": "Siemens",
-    "ManufacturersModelName": "Investigational_Device_7T",
-    "FlipAngle": 80
-}
